@@ -38,23 +38,35 @@
                     <a class="navbar-brand" href="./">Home</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><p class="navbar-text">Logged in as:</p></li>
-                        <li><p class="navbar-text">Robert</p></li>
-                        <li><a href="{{ route('adminHome') }}">admin</a></li>
-                        <li><a href="#contact">logout</a></li>
-                    </ul>
+
+                    @guest
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Sign in</a></li>
-                        <li><a href="#">Sign up</a></li>
+                        <li><a href="{{ route('login') }}">Logowanie</a></li>
+                        <li><a href="{{ route('register') }}">Rejestracja</a></li>
                     </ul>
+                    @else
+                    <ul class="nav navbar-nav">
+                        <li><p class="navbar-text">Zalogowany jako:</p></li>
+                        <li><p class="navbar-text">{{ Auth::user()->name }}</p></li>
+                        <li><a href="{{ route('adminHome') }}">admin</a></li>
+                        <li>    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        Wyloguj
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form></li>
+                    </ul>
+                    @endguest
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
 
         <div class="jumbotron">
             <div class="container">
-                <h1>Enjoy the trip!</h1>
+                <h1>Radość z podróży!</h1>
                 <p>A platform for tourists and owners of tourist facilities. Find the original place for the holidays!</p>
                 <p>Place your home on the site and let yourself be found by many tourists!</p>
                 <form action="{{ route('roomSearch') }}" class="form-inline">
