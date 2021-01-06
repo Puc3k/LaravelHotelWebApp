@@ -1,3 +1,3 @@
 /inprogress/
 Hello!
-This is a web application that I've created to learn Laravel during the online course.
+This is a web application that I'am creating to learn Laravel during the online course.
