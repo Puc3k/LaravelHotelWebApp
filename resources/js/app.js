@@ -3,5 +3,4 @@
  * dependencies. Then, we will be ready to develop a robust and powerful
  * application frontend using useful Laravel and JavaScript libraries.
  */
-
 require('./bootstrap');

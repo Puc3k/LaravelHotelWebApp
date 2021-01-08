@@ -29,7 +29,7 @@ class PhotosTableSeeder extends Seeder
                 for($i=1;$i<=10;$i++){
                     DB::table('photos')->insert([
                         'path'=> $faker->imageUrl(275,150,'people'),
-                        'photoable_id'=> $faker->numberBetween(1,10),
+                        'photoable_id'=> $faker->unique()->numberBetween(1,10),
                         'photoable_type'=>'App\User',
                     ]);
                     }

@@ -1,20 +1,30 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| app/Http/Controllers/FrontendController.php *** Copyright netprogs.pl | available only at Udemy.com | further distribution is prohibited  ***
+| app/Http/Controllers/FrontendController.php *** Copyright netprogs.pl | avaiable only at Udemy.com | further distribution is prohibited  ***
 |--------------------------------------------------------------------------
 */
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Noclegownia\Interfaces\FrontendRepositoryInterface; 
 
 class FrontendController extends Controller
 {
+    
+    public function __construct(FrontendRepositoryInterface $frontendRepository)
+    {
+        $this->fR = $frontendRepository;
+    }
+    
+    
     /* Lecture 6 */
     public function index()
     {
-        return view('frontend.index');
+        $objects = $this->fR->getObjectsForMainPage(); 
+	    // dd($objects); 
+        return view('frontend.index',['objects'=>$objects]); /* Lecture 12 second argument */
     }
     
     /* Lecture 6 */
@@ -49,3 +59,4 @@ class FrontendController extends Controller
     
     
 }
+

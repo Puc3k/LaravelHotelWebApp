@@ -23,6 +23,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app->bind(\App\Noclegownia\Interfaces\FrontendRepositoryInterface::class,function(){
+
+            return new \App\Noclegownia\Repositories\FrontendRepository;
+
+
+
+
+        });
     }
 }

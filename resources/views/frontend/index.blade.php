@@ -11,30 +11,30 @@
     <p class="text-center red bolded">No offers were found that met the criteria</p>
     <h1 class="text-center">Interesting places</h1>
 
-    <?php for ($i = 1; $i <= 3; $i++): ?>
+    @foreach($objects->chunk(4) as $chunked_object)
 
         <div class="row">
 
-            <?php for ($j = 1; $j <= 4; $j++): ?>
+        @foreach($chunked_object as $object)
 
                 <div class="col-md-3 col-sm-6">
 
                     <div class="thumbnail">
-                        <img class="img-responsive" src="http://lorempixel.com/800/400/city/?x=<?= mt_rand(1, 9999999) ?>" alt="...">
+                        <img class="img-responsive" src="{{$object->photos->first()->path ?? null}}" alt="...">
                         <div class="caption">
-                            <h3>Lorem ipsum  <small>City</small> </h3>
-                            <p>Lorem impsum dolor sit amet. Lorem impsum dolor sit amet.</p>
+                            <h3>{{$object->name}}<small>{{$object->city->name}}</small> </h3>
+                            <p>{{str_limit($object->description,100)}}.</p>
                             <p><a href="{{ route('object') }}" class="btn btn-primary" role="button">Details</a></p>
                         </div>
                     </div>
                 </div>
 
-            <?php endfor; ?>
+                @endforeach
 
 
         </div>
 
-    <?php endfor; ?>
+    @endforeach
 
 </div>
 @endsection <!-- Lecture 5  -->

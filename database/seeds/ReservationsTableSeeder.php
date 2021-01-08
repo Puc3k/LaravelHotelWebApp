@@ -19,7 +19,7 @@ class ReservationsTableSeeder extends Seeder
                 'status'=> $faker->boolean(50),
                 'user_id'=>$faker->numberBetween(1,10),
                 'city_id'=>$faker->numberBetween(1,10),
-                'room_id'=>$faker->numberBetween(1,10)
+                'room_id'=>$faker->numberBetween(1,30)
             ]);
             }
     }
