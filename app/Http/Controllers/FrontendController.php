@@ -1,19 +1,19 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| app/Http/Controllers/FrontendController.php *** Copyright netprogs.pl | avaiable only at Udemy.com | further distribution is prohibited  ***
+| app/Http/Controllers/FrontendController.php *** Copyright netprogs.pl | available only at Udemy.com | further distribution is prohibited  ***
 |--------------------------------------------------------------------------
 */
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Noclegownia\Interfaces\FrontendRepositoryInterface; 
+use App\Noclegownia\Interfaces\FrontendRepositoryInterface; /* Lecture 12 Lecture 13 FrontendRepositoryInterface  */
 
 class FrontendController extends Controller
 {
-    
-    public function __construct(FrontendRepositoryInterface $frontendRepository)
+    /* Lecture 12 */
+    public function __construct(FrontendRepositoryInterface $frontendRepository) /* Lecture 13 FrontendRepositoryInterface */
     {
         $this->fR = $frontendRepository;
     }
@@ -22,8 +22,8 @@ class FrontendController extends Controller
     /* Lecture 6 */
     public function index()
     {
-        $objects = $this->fR->getObjectsForMainPage(); 
-	    // dd($objects); 
+        $objects = $this->fR->getObjectsForMainPage(); /* Lecture 12 */
+        //dd($objects);  /* Lecture 12 */
         return view('frontend.index',['objects'=>$objects]); /* Lecture 12 second argument */
     }
     
@@ -34,9 +34,12 @@ class FrontendController extends Controller
     }
     
     /* Lecture 6 */
-    public function object()
+    public function object($id) /* Lecture 15 $id */
     {
-        return view('frontend.object');
+        $object = $this->fR->getObject($id); /* Lecture 15 */
+        
+        
+        return view('frontend.object',['object'=>$object]);
     }
     
     /* Lecture 6 */

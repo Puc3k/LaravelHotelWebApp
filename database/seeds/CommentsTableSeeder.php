@@ -18,7 +18,7 @@ class CommentsTableSeeder extends Seeder
                 'rating'=> $faker->numberBetween(1,5),
                 'user_id'=> $faker->numberBetween(1,10),
                 'commentable_id'=> $faker->numberBetween(1,10),
-                'commentable_type'=> $faker->randomElement(['App\Object','App\Article']),
+                'commentable_type'=> $faker->randomElement(['App\TouristObject','App\Article']),
             ]);
             }
     }

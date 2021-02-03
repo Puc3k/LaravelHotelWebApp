@@ -15,7 +15,7 @@
                     <div class="row">
 
                         <div class="col-xs-12 col-sm-3">
-                            <img src="http://lorempixel.com/200/200/people/?x=<?= mt_rand(1, 9999999) ?>" alt="" class="img-circle img-responsive">
+                            <img src="images/avatar_<?= mt_rand(1,6) ?>.jpg" alt="" class="img-circle img-responsive" style="width:250px;height:250px">
                         </div>
                         <div class="col-xs-12 col-sm-9">
                             <h2>John Doe</h2>

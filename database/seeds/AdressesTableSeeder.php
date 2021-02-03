@@ -13,10 +13,10 @@ class AdressesTableSeeder extends Seeder
     {
         $faker=Faker\Factory::create('pl_PL');
         for($i=1;$i<=10;$i++){
-            DB::table('adresses')->insert([
+            DB::table('addresses')->insert([
                 'number'=> $faker->numberBetween(1,10),
                 'street'=> $faker->streetName,
-                'object_id'=> $faker->unique()->numberBetween(1,10),
+                'tourist_object_id'=> $faker->unique()->numberBetween(1,10),
             ]);
             }
     }

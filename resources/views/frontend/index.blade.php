@@ -20,11 +20,11 @@
                 <div class="col-md-3 col-sm-6">
 
                     <div class="thumbnail">
-                        <img class="img-responsive" src="{{$object->photos->first()->path ?? null}}" alt="...">
+                        <img class="img-responsive" src="images\city_<?= mt_rand(1,10) ?>.jpg" alt="..."  style="width:400px;height:200px;">
                         <div class="caption">
                             <h3>{{$object->name}}<small>{{$object->city->name}}</small> </h3>
                             <p>{{str_limit($object->description,100)}}.</p>
-                            <p><a href="{{ route('object') }}" class="btn btn-primary" role="button">Details</a></p>
+                            <p><a href="{{ route('object',['id'=>$object->id]) }}" class="btn btn-primary" role="button">Details</a></p>
                         </div>
                     </div>
                 </div>
@@ -35,6 +35,7 @@
         </div>
 
     @endforeach
+    {{$objects->links()}}
 
 </div>
 @endsection <!-- Lecture 5  -->

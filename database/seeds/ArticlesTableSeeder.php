@@ -18,7 +18,7 @@ class ArticlesTableSeeder extends Seeder
                 'content'=> $faker->text(1000),
                 'created_at'=> $faker->dateTime,
                 'user_id'=> $faker->numberBetween(1,10),
-                'object_id'=> $faker->numberBetween(1,10),
+                'tourist_object_id'=> $faker->numberBetween(1,10),
             ]);
             }
     }

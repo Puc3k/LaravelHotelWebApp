@@ -8,89 +8,82 @@
 @section('content') <!-- Lecture 5  -->
 <div class="container-fluid places">
 
-    <h1 class="text-center">LoremIpsum object  <small>City name</small></h1>
+    <h1 class="text-center">Obiekt {{$object->name}} <small>{{$object->city->name}}</small></h1>
 
-    <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Sed porttitor lectus nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Sed porttitor lectus nibh. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
-    <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Sed porttitor lectus nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Sed porttitor lectus nibh. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
+    <p>{{$object->description}}</p>
+
 
 
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#gallery" data-toggle="tab" aria-expanded="true">Image gallery</a></li>
-        <li><a href="#people" data-toggle="tab" aria-expanded="true">Object is liked <span class="badge">10</span></a></li>
-        <li><a href="#adress" data-toggle="tab" aria-expanded="false">Address</a></li>
+        <li class="active"><a href="#gallery" data-toggle="tab" aria-expanded="true">Galeria zdjęć</a></li>
+        <li><a href="#people" data-toggle="tab" aria-expanded="true">Polubienia <span class="badge">{{$object->users->count()}}</span></a></li>
+        <li><a href="#adress" data-toggle="tab" aria-expanded="false">Adres</a></li>
     </ul>
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active in" id="gallery">
 
-            <?php for ($i = 1; $i <= 2; $i++): ?>
+           @foreach($object->photos->chunk(3) as $chunked_photos)
 
                 <div class="row top-buffer">
-
+                @foreach( $chunked_photos as $photo)
                     <div class="col-md-4">
-                        <img class="img-responsive" src="http://lorempixel.com/800/400/nightlife/?x=<?= mt_rand(1, 99999999) ?>" alt="">
+                        <img class="img-responsive" src="{{$photo->path ?? $placeholder}}" alt="" style="width: 500px; height:250px;">
                     </div>
-                    <div class="col-md-4">
-                        <img class="img-responsive" src="http://lorempixel.com/800/400/nightlife/?x=<?= mt_rand(1, 99999999) ?>" alt="">
-                    </div>
-                    <div class="col-md-4">
-                        <img class="img-responsive" src="http://lorempixel.com/800/400/nightlife/?x=<?= mt_rand(1, 99999999) ?>" alt="">
-                    </div>
-
+                    @endforeach
                 </div>
-
-            <?php endfor; ?>
+            @endforeach
 
         </div>
         <div class="tab-pane fade" id="people">
 
             <ul class="list-inline">
-                <?php for ($i = 1; $i <= 10; $i++): ?>
-                    <li><a href="{{ route('person') }}"><img title="John Doe" class="media-object img-responsive" width="50" height="50" src="http://lorempixel.com/50/50/people/?x=<?= mt_rand(1, 9999999) ?>" alt="..."> </a></li>
+            @foreach($object->users as $user)
+                    <li><a href="{{ route('person') }}"><img title="{{$user->FullName}}" class="media-object img-responsive" src="{{$user->photos->first()->path}}" alt="..." style="width: 80px;height:80px;"> </a></li>
 
-                <?php endfor; ?>
+             @endforeach
             </ul>
 
 
         </div>
         <div class="tab-pane fade" id="adress">
-            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial.</p>
+            <p>{{$object->address->street}} {{$object->address->number}}</p>
         </div>
     </div>
 
     <section>
 
-        <h2 class="text-center">Object rooms</h2>
+        <h2 class="text-center">Dostępne pokoje</h2>
 
-        <?php for ($i = 1; $i <= 1; $i++): ?>
+        @foreach($object->rooms->chunk (4) as $chunked_rooms)
 
             <div class="row">
 
-                <?php for ($j = 1; $j <= 4; $j++): ?>
+                @foreach($chunked_rooms as $room)
 
                     <div class="col-md-3 col-sm-6">
 
                         <div class="thumbnail">
-                            <img class="img-responsive img-circle" src="http://lorempixel.com/800/400/nightlife/?x=<?= mt_rand(1, 9999999) ?>" alt="...">
+                            <img class="img-responsive img-circle" src="{{$room->photos->first()->path ?? $placeholder}}" alt="..." style="width: 250px;height:250px;">
                             <div class="caption">
-                                <h3>Lorem ipsum</h3>
-                                <p>Lorem impsum dolor sit amet. Lorem impsum dolor sit amet.</p>
-                                <p><a href="{{ route('room') }}" class="btn btn-primary" role="button">Details</a><a href="{{ route('room') }}#reservation" class="btn btn-success pull-right" role="button">Reservation</a></p>
+                                <h3>Nr {{ $room->room_number}} </h3>
+                                <p>{{ str_limit($room->description,70)}}</p>
+                                <p><a href="{{ route('room') }}" class="btn btn-primary" role="button">Szczegóły</a><a href="{{ route('room') }}#reservation" class="btn btn-success pull-right" role="button">Rezerwacja</a></p>
                             </div>
                         </div>
                     </div>
 
-                <?php endfor; ?>
+                @endforeach
 
 
             </div>
 
-        <?php endfor; ?>
+        @endforeach
 
     </section>
 
     <section>
-        <h2 class="green">Object comments</h2>
-        <?php for ($j = 1; $j <= 4; $j++): ?>
+        <h2 class="green">Komentarze</h2>
+        @foreach($object->comments as $comment)
             <div class="media">
                 <div class="media-left media-top">
                     <a title="John Doe" href="{{ route('person') }}">
@@ -98,22 +91,18 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.
-                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-star negative-rating" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-star negative-rating" aria-hidden="true"></span>
+                    {{$comment->content}}
+                    {!!$comment->rating!!}
 
 
                 </div>
             </div>
             <hr>
-        <?php endfor; ?>
+            @endforeach
     </section>
 
     <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        Add comment
+        Dodaj komentarz
     </a>
     <div class="collapse" id="collapseExample">
         <div class="well">
@@ -153,17 +142,17 @@
     </div>
 
     <section>
-        <h2 class="red">Articles about the object / area</h2>
-        <?php for ($j = 1; $j <= 4; $j++): ?>
+        <h2 class="red">Artykuły o obiekcie: </h2>
+        @foreach($object->articles as $article)
             <div class="articles-list">
-                <h4 class="top-buffer">Accusantium voluptas aut eos aut qui in sunt.</h4>
-                <p><b> John Doe</b>
-                    <i>2016-05-10&nbsp;&nbsp;01:02:33</i>
+                <h4 class="top-buffer">{{$article->title}}</h4>
+                <p><b>{{$article->user->FullName}}</b>
+                    <i>{{$article->created_at}}</i>
                 </p>
-                <p>Fugiat similique voluptatum neque tempora iste. Ut sapiente aut autem autem dolores labore tenetur. Voluptatem qui cum earum. Consectetur at ipsam esse nemo est fuga. </p> <a href="{{ route('article') }}">More</a>
+                <p>{{str_limit($article->content,250)}}</p> <a href="{{ route('article') }}">Więcej</a>
             </div>
 
-        <?php endfor; ?>
+        @endforeach
     </section>
 
     <a href="#" class="btn btn-primary btn-xs top-buffer">Like this object</a>

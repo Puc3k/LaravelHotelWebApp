@@ -13,12 +13,12 @@ class CreateAdressesTable extends Migration
      */
     public function up()
     {
-        Schema::create('adresses', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('street');
             $table->integer('number');
-            $table->integer('object_id')->unsinged();
-            $table->foreign('object_id')->references('id')->on('objects')->onDelete('cascade');
+            $table->integer('tourist_object_id')->unsinged();
+            $table->foreign('tourist_object_id')->references('id')->on('objects')->onDelete('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ class CreateAdressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('adresses');
+        Schema::dropIfExists('addresses');
     }
 }

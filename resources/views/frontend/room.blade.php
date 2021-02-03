@@ -14,13 +14,13 @@
         <div class="row top-buffer">
 
             <div class="col-md-4">
-                <img class="img-responsive" src="http://lorempixel.com/800/400/nightlife/?x=<?= mt_rand(1, 99999999) ?>" alt="">
+                <img class="img-responsive" src="images/room_<?= mt_rand(1,10) ?>.jpg" alt="" style="width:400px;height:200px;">
             </div>
             <div class="col-md-4">
-                <img class="img-responsive" src="http://lorempixel.com/800/400/nightlife/?x=<?= mt_rand(1, 99999999) ?>" alt="">
+                <img class="img-responsive" src="images/room_<?= mt_rand(1,10) ?>.jpg" alt="" style="width:400px;height:200px;">
             </div>
             <div class="col-md-4">
-                <img class="img-responsive" src="http://lorempixel.com/800/400/nightlife/?x=<?= mt_rand(1, 99999999) ?>" alt="">
+                <img class="img-responsive" src="images/room_<?= mt_rand(1,10) ?>.jpg" alt="" style="width:400px;height:200px;">
             </div>
 
         </div>

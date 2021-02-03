@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    use Noclegownia\Presenters\UserPresenter;
     /**
      * The attributes that are mass assignable.
      *
@@ -36,4 +36,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function objects(){
+        return $this->morphByMany('App\TouristObject','likeable');
+    }
+    public function photos(){
+        return $this->morphMany('App\Photo','photoable');
+    }
 }

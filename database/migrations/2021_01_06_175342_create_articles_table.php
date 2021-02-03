@@ -20,8 +20,8 @@ class CreateArticlesTable extends Migration
             $table->dateTime('created_at');
             $table->integer('user_id')->unsinged();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('object_id')->unsinged();
-            $table->foreign('object_id')->references('id')->on('objects')->onDelete('cascade');
+            $table->integer('tourist_object_id')->unsinged();
+            $table->foreign('tourist_object_id')->references('id')->on('objects')->onDelete('cascade');
         });
     }
 
