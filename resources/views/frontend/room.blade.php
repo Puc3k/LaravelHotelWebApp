@@ -7,41 +7,32 @@
 
 @section('content') <!-- Lecture 5  -->
 <div class="container places">
-    <h1 class="text-center">Room in <a href="{{ route('object') }}">X</a> object</h1>
+    <h1 class="text-center">Pokój w obiekcie <a href="{{ route('object',['room'=>$room->tourist_object_id]) }}">{{ $room->object->name}}</a></h1>
 
-    <?php for ($i = 1; $i <= 2; $i++): ?>
-
+    @foreach($room->photos->chunk(3) as $chunked_photos)
         <div class="row top-buffer">
-
+            @foreach($chunked_photos as $photo)
             <div class="col-md-4">
-                <img class="img-responsive" src="images/room_<?= mt_rand(1,10) ?>.jpg" alt="" style="width:400px;height:200px;">
+                <img class="img-responsive" src="{{$photo->path ?? $placeholder}}" alt="" style="width:400px;height:200px;">
             </div>
-            <div class="col-md-4">
-                <img class="img-responsive" src="images/room_<?= mt_rand(1,10) ?>.jpg" alt="" style="width:400px;height:200px;">
-            </div>
-            <div class="col-md-4">
-                <img class="img-responsive" src="images/room_<?= mt_rand(1,10) ?>.jpg" alt="" style="width:400px;height:200px;">
-            </div>
-
+            @endforeach
         </div>
-
-    <?php endfor; ?>
+   @endforeach
 
 
     <section>
 
         <ul class="list-group">
             <li class="list-group-item">
-                <span class="bolded">Description:</span> Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Sed porttitor lectus nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Sed porttitor lectus nibh. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.
+                <span class="bolded">Opis: </span>{{$room->description}}
             </li>
             <li class="list-group-item">
-                <span class="bolded">Room size:</span> 3
+                <span class="bolded">Rozmiar pokoju: </span> {{$room->room_size}} osobowy
             </li>
             <li class="list-group-item">
-                <span class="bolded">Price per night:</span> 150 USD
-            </li>
+                <span class="bolded">Cena za noc:</span> {{$room->room_price}} zł
             <li class="list-group-item">
-                <span class="bolded">Address:</span> Vestibulum ante ipsum primis
+                <span class="bolded">Adres: </span>{{$room->object->city->name}} ul.{{$room->object->address->street}} {{$room->object->address->number}} 
             </li>
         </ul>
     </section>
@@ -74,4 +65,96 @@
     </section>
 
 </div>
-@endsection <!-- Lecture 5  -->
+@endsection
+@push('scripts')
+<script>
+ 
+    /* Lecture 21 */
+    function datesBetween(startDt, endDt) {
+        var between = [];
+        var currentDate = new Date(startDt);
+        var end = new Date(endDt);
+        while (currentDate <= end)
+        {
+            between.push( $.datepicker.formatDate('mm/dd/yy',new Date(currentDate)) );
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+    
+            return between;
+    }
+        
+    $.ajax({
+    
+        cache: false,
+        url: base_url + '/ajaxGetRoomReservations/' + {{ $room->id }},
+        type: "GET",
+        success: function(response){
+    
+    
+            var eventDates = {};
+            var dates = [/* Lecture 21 */];
+            
+            /* Lecture 21 */
+            for(var i = 0; i <= response.reservations.length - 1; i++)
+            {
+                dates.push(datesBetween(new Date(response.reservations[i].day_in), new Date(response.reservations[i].day_out))); // array of arrays
+            }
+            
+            
+            /*  a = [1];
+                b = [2];
+                x = a.concat(b);
+                x = [1,2];
+                [ [1],[2],[3] ] => [1,2,3]  */
+            dates = [].concat.apply([], dates); /* Lecture 21 */   // flattened array
+    
+            /* Lecture 21 */
+            for (var i = 0; i <= dates.length - 1; i++)
+            {
+                eventDates[dates[i]] = dates[i];
+            }
+    
+    
+            $(function () {
+                $("#avaiability_calendar").datepicker({
+                    onSelect: function (data) {
+    
+            //            console.log($('#checkin').val());
+    
+                        if ($('#checkin').val() == '')
+                        {
+                            $('#checkin').val(data);
+                        } else if ($('#checkout').val() == '')
+                        {
+                            $('#checkout').val(data);
+                        } else if ($('#checkout').val() != '')
+                        {
+                            $('#checkin').val(data);
+                            $('#checkout').val('');
+                        }
+    
+                    },
+                    beforeShowDay: function (date)
+                    {
+                        var tmp =  eventDates[$.datepicker.formatDate('mm/dd/yy', date)]; /* Lecture 21 */
+                        //console.log(date);
+                        if (tmp)
+                            return [false, 'unavaiable_date'];
+                        else
+                            return [true, ''];
+                    }
+    
+    
+                });
+            });
+    
+    
+        }
+    
+    
+    });
+    
+    
+        
+    </script>
+@endpush

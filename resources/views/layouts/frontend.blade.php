@@ -15,7 +15,9 @@
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://bootswatch.com/3/readable/bootstrap.min.css" crossorigin="anonymous">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+<script>
+var base_url ='{{url('/')}}';
+</script>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -35,7 +37,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{route('home')}}">Home</a>
+                    <a class="navbar-brand" href="{{route('home')}}">Główna</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
 
@@ -67,36 +69,39 @@
         <div class="jumbotron">
             <div class="container">
                 <h1>Radość z podróży!</h1>
-                <p>A platform for tourists and owners of tourist facilities. Find the original place for the holidays!</p>
-                <p>Place your home on the site and let yourself be found by many tourists!</p>
-                <form action="{{ route('roomSearch') }}" class="form-inline">
+                <p>Znajdź wymarzone miejsce do spania</p>
+                <p>Wynajmij mieszkanie dla turystów</p>
+                <form method="POST" action="{{ route('roomSearch') }}" class="form-inline">
                     <div class="form-group">
-                        <label class="sr-only" for="city">City</label>
-                        <input name="city" type="text" class="form-control autocomplete" id="city" placeholder="City">
+                        <label class="sr-only" for="city">miasto</label>
+                        <input name="city" value="{{old('city')}}" type="text" class="form-control autocomplete" id="city" placeholder="miasto">
                     </div>
                     <div class="form-group">
-                        <label class="sr-only" for="day_in">Check in</label>
-                        <input name="check_in" type="text" class="form-control datepicker" id="check_in" placeholder="Check in">
+                        <label class="sr-only" for="day_in">data przyjazdu</label>
+                        <input name="check_in" value="{{old('check_in')}}" type="text" class="form-control datepicker" id="check_in" placeholder="data przyjazdu">
                     </div>
 
                     <div class="form-group">
-                        <label class="sr-only" for="day_out">Check out</label>
-                        <input name="check_out" type="text" class="form-control datepicker" id="check_out" placeholder="Check out">
+                        <label class="sr-only" for="day_out">data odjazdu</label>
+                        <input name="check_out" value="{{old('check_out')}}"" type="text" class="form-control datepicker" id="check_out" placeholder="data odjazdu">
                     </div>
                     <div class="form-group">
                         <select name="room_size" class="form-control">
-                            <option>Room size</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <option>Ilość osób</option>
+                            @for($i=1;$i<=5;$i++)
+                            @if(old('room_size') == $i)
+                            <option selected value="{{$i}}">{{$i}}</option>
+                            @else 
+                            <option value="{{$i}}">{{$i}}</option>
+                            @endif
+                            @endfor()
+
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-warning">Search</button>
+                    <button type="submit" class="btn btn-warning">Szukaj</button>
                     
                     <!-- Lecture 6: deleted <input type="hidden" name="view" value="roomsearch"> -->
-                       
+                       {{csrf_field()}} 
                 </form>
 
             </div>
@@ -114,7 +119,7 @@
                 </div>
 
                 <div class="col-md-6 col-xs-12">
-                    <h1 class="text-center">Download mobile app.</h1>
+                    <h1 class="text-center">Pobierz aplikacje mobilną</h1>
                     <!-- Lecture 5 img src tags -->
                     <a href="#"><img class="img-responsive center-block" src="{{ asset('images/google.png') }}" alt=""></a><br><br>
                     <a href="#"><img class="img-responsive center-block" src="{{ asset('images/apple.png') }}" alt=""></a><br><br>
@@ -140,5 +145,6 @@
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="{{ asset('js/app.js') }}"></script> <!-- Lecture 5 -->
+        @stack('scripts')
     </body>
 </html>

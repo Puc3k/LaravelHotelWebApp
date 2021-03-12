@@ -13,7 +13,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Admin panel</title>
+        <title>Panel zarządzania</title>
 
         <!-- Bootstrap core CSS -->
         <link href="https://bootswatch.com/3/readable/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +43,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{route('home')}}">Enjoy the trip!</a>
+                    <a class="navbar-brand" href="{{route('home')}}">Noclegownia</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -60,7 +60,11 @@
                         </li>
                         <li><p class="navbar-text">John Doe</p></li>
                         <li><a href="{{ route('profile') }}">Profile</a></li>
-                        <li><a href="#">Logout</a></li>
+                        <li> <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        Wyloguj
+                                    </a></li>
                     </ul>
                 </div>
             </div>
@@ -70,10 +74,10 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a href="{{ route('adminHome') }}">Booking calendar <span class="sr-only">(current)</span></a></li>
-                        <li><a href="{{ route('myObjects') }}">My tourist objects</a></li>
-                        <li><a href="{{ route('saveObject') }}">Add a new tourist object</a></li>
-                        <li><a href="{{ route('cities.index') }}">Cities</a></li>
+                        <li class="active"><a href="{{ route('adminHome') }}">Kalendarz rezerwacji <span class="sr-only">(current)</span></a></li>
+                        <li><a href="{{ route('myObjects') }}">Moje obiekty</a></li>
+                        <li><a href="{{ route('saveObject') }}">Dodaj obiekt</a></li>
+                        <li><a href="{{ route('cities.index') }}">Miasta</a></li>
                     </ul>
                 </div>
 
