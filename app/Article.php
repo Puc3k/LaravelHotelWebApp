@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Model; /* Lecture 16 */
 /* Lecture 16 */
 class Article extends Model
 {
+    
+    use Noclegownia\Presenters\ArticlePresenter; /* Lecture 23 */
+    
     /* Lecture 16 */
     public function user()
     {
@@ -33,7 +36,7 @@ class Article extends Model
     /* Lecture 22 */
     public function object()
     {
-        return $this->belongsTo('App\TouristObject','tourist_object_id');
+        return $this->belongsTo('App\TouristObject','object_id');
     }
 }
 

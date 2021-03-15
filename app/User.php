@@ -40,6 +40,7 @@ class User extends Authenticatable
         return $this->morphedByMany('App\TouristObject', 'likeable');
     }
     
+    
     /* Lecture 22 */
     public function larticles()
     {
@@ -50,6 +51,12 @@ class User extends Authenticatable
     public function photos()
     {
         return $this->morphMany('App\Photo', 'photoable');
+    }
+    
+    /* Lecture 23 */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
     }
 }
 

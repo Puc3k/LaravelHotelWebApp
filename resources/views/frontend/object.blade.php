@@ -42,7 +42,7 @@
 
             <ul class="list-inline">
                 @foreach( $object->users as $user) <!-- Lecture 16 -->
-                    <li><a href="{{ route('person') }}"><img title="{{ $user->FullName /* Lecture 16 */ }}" class="media-object img-responsive" width="50" height="50" src="{{ $user->photos->first()->path ?? $placeholder /* Lecture 16 */ }}" alt="..."> </a></li>
+                    <li><a href="{{ route('person',['id'=>$user->id])}}"><img title="{{ $user->FullName /* Lecture 16 */ }}" class="media-object img-responsive" width="50" height="50" src="{{ $user->photos->first()->path ?? $placeholder /* Lecture 16 */ }}" alt="..."> </a></li>
 
                 @endforeach <!-- Lecture 16 -->
             </ul>
@@ -90,7 +90,7 @@
         @foreach( $object->comments as $comment ) <!-- Lecture 16 -->
             <div class="media">
                 <div class="media-left media-top">
-                    <a title="{{ $comment->user->FullName /* Lecture 16 */ }}" href="{{ route('person') }}">
+                    <a title="{{ $comment->user->FullName /* Lecture 16 */ }}" href="{{ route('person',['id'=>$comment->user->id]/* Lecture 23 */) }}">
                         <img class="media-object" width="50" height="50" src="{{ $comment->user->photos->first()->path ?? $placeholder /* Lecture 16 */ }}" alt="...">
                     </a>
                 </div>

@@ -8,7 +8,7 @@
 namespace App\Noclegownia\Repositories; /* Lecture 12 */
 
 use App\Noclegownia\Interfaces\FrontendRepositoryInterface;  /* Lecture 13 */
-use App\{TouristObject,City/*Lecture 17*/,Room/* Lecture 20 */,Reservation/* Lecture 20 */,Article/* Lecture 22 */}; /* Lecture 12 */
+use App\{TouristObject,City/*Lecture 17*/,Room/* Lecture 20 */,Reservation/* Lecture 20 */,Article/* Lecture 22 */,User/* Lecture 23 */}; /* Lecture 12 */
 
 /* Lecture 12 */
 class FrontendRepository implements FrontendRepositoryInterface  {   /* Lecture 13 implements FrontendRepositoryInterface */
@@ -66,6 +66,12 @@ class FrontendRepository implements FrontendRepositoryInterface  {   /* Lecture 
     public function getArticle($id)
     {
         return  Article::with(['object.photos','comments'])->find($id);
+    } 
+    
+    /* Lecture 23 */
+    public function getPerson($id)
+    {
+        return  User::with(['objects','larticles','comments.commentable'])->find($id);
     } 
     
   

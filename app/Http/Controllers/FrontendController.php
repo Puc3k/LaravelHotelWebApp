@@ -30,24 +30,24 @@ class FrontendController extends Controller
     }
     
     /* Lecture 6 */
-    public function article($id)
+    public function article($id/* Lecture 22 */)
     {
         $article = $this->fR->getArticle($id); /* Lecture 22 */
-        return view('frontend.article',compact('article')); 
+        return view('frontend.article',compact('article')/* Lecture 22 */); 
     }
     
     /* Lecture 6 */
     public function object($id) /* Lecture 15 $id */
     {
         $object = $this->fR->getObject($id); /* Lecture 15 */
-
         return view('frontend.object',['object'=>$object]); /* Lecture 16 second argument */
     }
     
     /* Lecture 6 */
-    public function person()
+    public function person($id/* Lecture 23 */)
     {
-        return view('frontend.person');
+        $user = $this->fR->getPerson($id); /* Lecture 23 */
+        return view('frontend.person', ['user'=>$user]/* Lecture 23 */);
     }
     
     /* Lecture 6 */
